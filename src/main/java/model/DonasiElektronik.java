@@ -13,16 +13,14 @@ public class DonasiElektronik extends Donasi {
     private String merek;
     private boolean masihBerfungsi;
 
-    public DonasiElektronik(String idDonasi, String namaPendonor, String namaBarang,
-                            int jumlahBarang, String merek, boolean masihBerfungsi) {
+    public DonasiElektronik(String idDonasi, String namaPendonor, String namaBarang, int jumlahBarang, String merek, boolean masihBerfungsi) {
         super(idDonasi, namaPendonor, namaBarang, jumlahBarang);
         setMerek(merek);
         setMasihBerfungsi(masihBerfungsi);
     }
 
-    // Overloading constructor: dianggap masih berfungsi
-    public DonasiElektronik(String idDonasi, String namaPendonor, String namaBarang,
-                            int jumlahBarang, String merek) {
+    // Overloading Constructor
+    public DonasiElektronik(String idDonasi, String namaPendonor, String namaBarang, int jumlahBarang, String merek) {
         this(idDonasi, namaPendonor, namaBarang, jumlahBarang, merek, true);
     }
 
@@ -31,7 +29,7 @@ public class DonasiElektronik extends Donasi {
     }
 
     public void setMerek(String merek) {
-        this.merek = validasiTeks(merek, "Merek");
+        this.merek = validasiTeks(merek, "Merek Elektronik");
     }
 
     public boolean isMasihBerfungsi() {
@@ -48,8 +46,25 @@ public class DonasiElektronik extends Donasi {
     }
 
     @Override
+    public String getDetailRincian() {
+        return "Merek: " + getMerek() + " | Kondisi Berfungsi: " + (isMasihBerfungsi() ? "Ya" : "Tidak");
+    }
+
+    @Override
+    public String cekKelayakanPenyaluran() {
+        if (isMasihBerfungsi()) {
+            return "Siap Disalurkan";
+        }
+        return "Butuh Perbaikan/Service";
+    }
+
+    @Override
+    public boolean isSiapDisalurkan() {
+        return isMasihBerfungsi();
+    }
+
+    @Override
     public String tampilkanInfo() {
-        return super.tampilkanInfo() + " | Merek: " + merek
-                + " | Berfungsi: " + (masihBerfungsi ? "Ya" : "Tidak");
+        return super.tampilkanInfo() + " | Merek: " + getMerek() + " | Berfungsi: " + (isMasihBerfungsi() ? "Ya" : "Tidak");
     }
 }
